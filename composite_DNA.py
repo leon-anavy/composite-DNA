@@ -37,13 +37,19 @@ class composite_DNA_alphabet(cAB.composite_alphabet):
         counts = [{l:0 for l in self.basic_alphabet} for _ in range(oligo_len)]
         total = 0
         for idx,payload in enumerate(payloads):
+            payload = payload.rstrip()
             if 'N' not in payload:
                 if len(payload) == oligo_len:
                     total += 1
                     for i in range(oligo_len):
                         counts[i][payload[i]] += 1
+        if total == 0:
+            return total, None
         ratios = [{l:1.0*counts[i][l]/total for l in self.basic_alphabet} for i in range(oligo_len)]
         return total,ratios
         
 def from_file(filename):
     return pickle.load(filename)
+
+
+

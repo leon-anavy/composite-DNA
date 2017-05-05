@@ -56,7 +56,13 @@ class composite_letter(object):
         # Not strictly necessary, but to avoid having both x==y and x!=y
         # True at the same time
         return not(self == other)
-    
+
+    def freqs(self):
+        ratio = self.ratio_dict
+        alp = self.basic_alphabet
+        return tuple(float(ratio[l])/sum(ratio.values()) for l in alp)
+
+    # Expects a string in the format #A#C#G#T where # stands for the number of each letter in the ratio (e.g 1A2C0G0T)
     @classmethod
     def parse(cls,letter_as_string):
         mm = re.finditer(pattern='([0-9]*)([A-Z])',string=letter_as_string)
@@ -111,12 +117,15 @@ class composite_word(object):
         # Not strictly necessary, but to avoid having both x==y and x!=y
         # True at the same time
         return not(self == other)
+
+    def __getitem__(self, item):
+        return self.letters.__getitem__(item)
     
     @classmethod
     def parse(cls,word_as_string):
         letters_as_strings = word_as_string.split('|')
         return cls([composite_letter.parse(l) for l in letters_as_strings])
-        
+
         
 class composite_alphabet(object):
     def __repr__(self):
@@ -152,13 +161,25 @@ class composite_alphabet(object):
         except:
             return L1_dist(observed_ratio_p,letter_ratio_p)
     
-    def identify_letter(self,observed_ratio):
+    def identify_letter(self,observed_ratio,letters = None):
+        if letters is None:
+            letters = self.letters
+        # change observed to sum 1
+        # set alphabet resolution and possible values
+        #   for value in observed:
+        #       if close enough to possible value:
+        #           set as constant
+        # for letter in letters:
+        #   change letter to sum 1
+        #   if constants not equal to letter values:
+        #       continue
+        #   check distance and keep if minimal so far
         return(min(self.letters,key = lambda l: self.dist_from_letter(observed_ratio,l)))
     
     def get_two_closest_letters(self, observed_ratio, letters = None):
         if letters is None:
             letters = self.letters
-        letters_and_dists = [(l,self.dist_from_letter(observed_ratio,l.ratio)) for l in letters]
+        letters_and_dists = [(l,self.dist_from_letter(observed_ratio,l)) for l in letters]
         return(sorted(letters_and_dists, key = lambda x:x[1])[:2])
     
     def as_words(self):
