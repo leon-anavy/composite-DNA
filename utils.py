@@ -9,13 +9,13 @@ IUPAC_dict = {tuple((1, 0, 0, 0)): 'A', tuple((0, 1, 0, 0)): 'C', tuple((0, 0, 1
               tuple((0, 0, 1, 1)): 'K', tuple((1, 1, 0, 0)): 'M', tuple((0, 1, 1, 1)): 'B', tuple((1, 0, 1, 1)): 'D', \
               tuple((1, 1, 0, 1)): 'H', tuple((1, 1, 1, 0)): 'V', tuple((1, 1, 1, 1)): 'N'}
 IUPAC_dict_rev = {v: k for k, v in IUPAC_dict.items()}
-eps = 1E-15
-
+eps = 1E-3
+np.random.seed(1)
 
 def to_IUPAC(letter):
     ratio = [letter.ratio_dict[l] for l in letter.basic_alphabet]
     k = float(sum(ratio))
-    for i in range(1, 11):
+    for i in range(1, 21):
         if (k / i).is_integer():
             ratio_i = tuple([(float(r) / i) for r in ratio])
             if all([r.is_integer() for r in ratio_i]):
@@ -72,7 +72,7 @@ def read_composite_fasta(filename, resolution):
             yield (title, parse_IUPAC_sequence(seq, resolution))
 
 
-def simulate_composite_letter(letter, depth):
+def simulate_composite_letter(letter, depth, eps=eps):
     freqs = letter.freqs()
     freqs = [(f + eps) / (1 + 4 * eps) for f in freqs]
     return np.random.multinomial(depth, freqs)
@@ -94,9 +94,11 @@ def simulate_composite_reads(seq, depth, seq_name):
                                      , letter_annotations={'phred_quality': [40, ] * len(r)}))
     return reads
 
+def composite_reads_to_ratios((bc, payloads), alphabet, expected_len):
+    ratios = alphabet.ratios_from_payloads(payloads, expected_len)[1]
+    return ratios
 
-def read_composite_reads((bc, payloads), alphabet, expected_len):
-    analyzed, ratios = alphabet.ratios_from_payloads(payloads, expected_len)
+def ratios_to_oligo((bc, ratios), alphabet, expected_len):
     if ratios is not None:
         oligo = cAB.composite_word([alphabet.identify_letter(ratios[i]) for i in range(expected_len)])
         return bc,oligo
@@ -110,8 +112,8 @@ def demultiplex_reads(reads, comp):
         sample_reads[bc].append(r)
     return sample_reads
 
-def simulate_fasta_reads(fasta_file, depth, out_file):
-    seqs = read_composite_fasta(fasta_file,10)
+def simulate_fasta_reads(fasta_file, depth, out_file,k):
+    seqs = read_composite_fasta(fasta_file,k)
     with open(out_file, 'w') as outf:
         outf.write('')
     for idx,seq in enumerate(seqs):

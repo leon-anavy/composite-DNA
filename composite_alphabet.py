@@ -22,6 +22,9 @@ class composite_letter(object):
     
     def __str__(self):
         return '{}'.format(''.join((str(self.ratio_dict[l])+l for l in self.basic_alphabet)))
+
+    def stacked_str(self):
+        return '{}'.format('\n'.join((str(self.ratio_dict[l]) + l for l in self.basic_alphabet)))
         
     def __init__(self, basic_alphabet, ratio_dict):
         self.basic_alphabet = basic_alphabet
@@ -152,7 +155,22 @@ class composite_alphabet(object):
             self._dist = KL_dist
         else:
             raise Exception('invalid distance measure')
-        
+
+    def get_dist(self):
+        if self.dist == L1_dist:
+            return 'L1'
+        elif self.dist == KL_dist:
+            return 'KL'
+        else:
+            raise Exception('something went terribly wrong')
+
+    @classmethod
+    def from_letters(cls, letters):
+        basic_alphabet = letters[0].basic_alphabet
+        ratios = [l.ratio_dict for l in letters]
+        return cls(basic_alphabet, ratios)
+
+    # expects observed_ratio as a dictionary of "letter:count" items
     def dist_from_letter(self,observed_ratio,letter):
         observed_ratio_p = [float(observed_ratio[l]) / sum(observed_ratio.values()) for l in self.basic_alphabet]
         letter_ratio_p = [float(letter.ratio_dict[l]) / sum(letter.ratio_dict.values()) for l in self.basic_alphabet]
