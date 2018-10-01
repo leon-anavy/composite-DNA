@@ -1,9 +1,12 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~ This repo is still under construction ~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 # Composite DNA
 
 This repo contains all code required to execute the simulations and anlyses included in the composite DNA manuscript.
 [doi of the manuscript on BioRxiv]
 
-# #######This repo is still under construction#######
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
