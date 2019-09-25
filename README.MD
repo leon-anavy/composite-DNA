@@ -9,7 +9,10 @@ Data storage in DNA with fewer synthesis cycles using composite DNA letters
 https://doi.org/10.1038/s41587-019-0240-x
 
 ## Encoded data
-<link to data folder>
+The encoded files are available at
+https://github.com/leon-anavy/composite-DNA/tree/master/data
+- info_to_code.tar.gz - Message from Erlich and Zielinski (DOI: 10.1126/science.aaj2038)
+- pt003.zip - Bi-lingual HTML version of the Bible from Mamre (https://www.mechon-mamre.org/p/pt/pt0101.htm)
 
 ## Encoding
 <link to encoding instructions>
