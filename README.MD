@@ -4,38 +4,28 @@
 
 # Composite DNA
 
-This repo contains all code required to execute the simulations and anlyses included in the composite DNA manuscript.
-[doi of the manuscript on BioRxiv]
+This repo contains all code and instructions for the composite DNA encoding and decoding used in the paper:
+Data storage in DNA with fewer synthesis cycles using composite DNA letters
+https://doi.org/10.1038/s41587-019-0240-x
 
-## Getting Started
+## Encoded data
+<link to data folder>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## Encoding
+<link to encoding instructions>
 
-### Prerequisites
+## DNA synthesis
+<details about the synthesis>
+  
+## DNA sequencing
+<details about the sequencing>
+  
+## Sequencing results
+All NGS raw data in avaialble at
+https://www.ebi.ac.uk/ena/data/view/PRJEB32427
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+## Decoding
+<link to decoding instructions>
 
 ## Authors
 
@@ -44,7 +34,3 @@ End with an example of getting some data out of the system or using it for a lit
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
